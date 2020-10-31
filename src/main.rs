@@ -1,8 +1,13 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use crate::common::cache_strategy::lru_cache_strategy::lru_cache::LruCache;
+use crate::common::cache_strategy::i_cache_strategy::ICacheStrategy;
+
+mod common;
 
 #[get("/")]
 async fn hello() -> impl Responder {
-    return HttpResponse::Ok().body("Hello world!");
+    let cache: LruCache = ICacheStrategy::new();
+    return HttpResponse::Ok().body(cache.get("myKey"));
 }
 
 #[actix_web::main]
