@@ -6,6 +6,7 @@ mod common;
 mod controllers;
 mod services;
 mod dto;
+mod tests;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
