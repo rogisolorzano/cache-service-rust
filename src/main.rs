@@ -1,22 +1,27 @@
-use actix_web::{get, App, HttpResponse, HttpServer, Responder};
-use crate::common::cache_strategy::lru_cache_strategy::lru_cache::LruCache;
-use crate::common::cache_strategy::i_cache_strategy::ICacheStrategy;
+use actix_web::{App, HttpServer, web, Responder, HttpResponse};
+use crate::controllers::cache_controller::CacheController;
+use crate::common::utils::json_error_handler::{json_error_handler};
 
 mod common;
-
-#[get("/")]
-async fn hello() -> impl Responder {
-    let cache: LruCache = ICacheStrategy::new();
-    return HttpResponse::Ok().body(cache.get("myKey"));
-}
+mod controllers;
+mod services;
+mod dto;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .service(hello)
+            .route("/", web::get().to(health))
+            .route("/{key}", web::get().to(CacheController::get))
+            .route("/", web::put().to(CacheController::set))
+            .route("/{key}", web::delete().to(CacheController::delete))
+            .app_data(web::JsonConfig::default().error_handler(json_error_handler))
     })
         .bind("127.0.0.1:8080")?
         .run()
         .await
+}
+
+async fn health() -> impl Responder {
+    HttpResponse::Ok().body("OK")
 }
