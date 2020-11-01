@@ -1,9 +1,4 @@
-pub type UnixTimestampSeconds = String;
-
-pub struct CacheConfig {
-    /// The expiry timestamp in seconds.
-    expiry_timestamp: UnixTimestampSeconds,
-}
+use crate::common::cache_strategy::cache_config::CacheConfig;
 
 pub trait ICacheStrategy {
     /// Initializes and returns a new instance of the implementer.

@@ -35,7 +35,8 @@ PUT /
 ```json
 {
    "key": "myKey",
-   "value": "myValue"
+   "value": "myValue",
+   "ttl": 60
 }
 ```
 

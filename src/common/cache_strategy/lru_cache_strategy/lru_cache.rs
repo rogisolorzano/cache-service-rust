@@ -1,7 +1,7 @@
-use crate::common::cache_strategy::i_cache_strategy::{ICacheStrategy, CacheConfig};
+use crate::common::cache_strategy::i_cache_strategy::{ICacheStrategy};
 use crate::common::cache_strategy::lru_cache_strategy::lru_cache_in_memory_store::{LruCacheInMemoryStore};
+use crate::common::cache_strategy::cache_config::CacheConfig;
 use std::sync::MutexGuard;
-use serde_json::json;
 
 pub struct LruCache;
 
@@ -23,7 +23,7 @@ impl ICacheStrategy for LruCache {
 
         (*values).push(value);
 
-        return json!(*values).to_string();
+        return format!("{:?}", values);
     }
 
     fn set(&self, _key: &str, _value: &str, _config: CacheConfig) {
