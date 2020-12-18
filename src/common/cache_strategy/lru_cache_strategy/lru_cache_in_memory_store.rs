@@ -32,7 +32,7 @@ impl LruCacheInMemoryStore {
             // and for the lifetime of the entire process.
             ONCE.call_once(|| {
                 let store = LruCacheInMemoryStore{
-                    inner: Arc::new(Mutex:: new(Vec::new())),
+                    inner: Arc::new(Mutex::new(Vec::new())),
                 };
 
                 // STORE_SINGLETON is currently a pointer that was initialized to nothing.
